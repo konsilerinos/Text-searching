@@ -1,8 +1,9 @@
 #include "textlib.h"
 #include <vector>
 #include <string>
+#include <map>
 
-bool SequentialSearching(std::string str, std::string part) {
+bool SequentialTextSearching(std::string str, std::string part) {
 
 	if (str.length() < part.length()) {
 
@@ -88,5 +89,55 @@ bool KnuthMorrisPrattTextSearching(std::string str, std::string part) {
 
 			partIndex = pi[partIndex - 1];
 		}
+	}
+}
+
+bool BoyerMooreTextSearching(std::string str, std::string part) {
+
+	int strLen = str.length();
+	int partLen = part.length();
+
+	if (strLen < partLen) {
+
+		return false;
+	}
+
+	std::map <char, int> offsetTable;
+
+	for (int i = 0; i <= 255; i++) {
+
+		offsetTable.insert(std::make_pair(static_cast<char>(i), partLen));
+	}
+
+	for (int i = 0; i < partLen - 1; i++) {
+
+		offsetTable.insert(std::make_pair(part[i], partLen - i - 1));
+	}
+
+	int i = partLen - 1;
+	int j = i;
+	int k = i;
+
+	while (j >= 0 && i <= partLen - 1) {
+
+		j = partLen - 1;
+		k = i;
+
+		while (j >= 0 && str[k] == part[j]) {
+
+			k--;
+			j--;
+		}
+
+		i += offsetTable[i];
+	}
+
+	if (k >= strLen - partLen) {
+
+		return false;
+	}
+	else {
+
+		return true;
 	}
 }

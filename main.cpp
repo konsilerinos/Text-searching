@@ -10,7 +10,7 @@ int main() {
 	std::cout << "String: " << str << std::endl;
 	std::cout << "Part: " << part << std::endl;
 
-	bool searchingStatus = SequentialSearching(str, part);
+	bool searchingStatus = BoyerMooreTextSearching(str, part);
 
 	if (searchingStatus) {
 
