@@ -2,6 +2,37 @@
 #include <vector>
 #include <string>
 
+bool SequentialSearching(std::string str, std::string part) {
+
+	if (str.length() < part.length()) {
+
+		return false;
+	}
+	else {
+
+		for (int i = 0; i < str.length(); i++) {
+
+			bool temp = true;
+
+			for (int j = 0; j < part.length(); j++) {
+
+				if (str[j + i] != part[j]) {
+
+					temp = false;
+					j = part.length();
+				}
+			}
+
+			if (temp) {
+
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 void CreatePiArray(std::vector <int>& pi, std::string str) {
 
 	int j = 0, i = 1;
@@ -25,7 +56,6 @@ void CreatePiArray(std::vector <int>& pi, std::string str) {
 		}
 	}
 }
-
 bool KnuthMorrisPrattTextSearching(std::string str, std::string part) {
 
 	std::vector <int> pi(str.length());
@@ -58,6 +88,5 @@ bool KnuthMorrisPrattTextSearching(std::string str, std::string part) {
 
 			partIndex = pi[partIndex - 1];
 		}
-
 	}
 }
