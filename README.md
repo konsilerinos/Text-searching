@@ -4,6 +4,7 @@
 1. Последовательный.
 2. Алгоритм Кнута-Морриса-Пратта.
 3. Алгоритм Бойера-Мура-Хорспула.
+4. Алгоритм Рабина.
 
 ## Последовательный поиск
 
@@ -12,6 +13,7 @@
 Сложность вычислений: **O(nm)**, где n - длина строки, m - длина подстроки.
 
 Реализация на языке С++
+
 ```C++
 bool SequentialSearching(std::string str, std::string part) {
 
@@ -120,7 +122,7 @@ bool KnuthMorrisPrattTextSearching(std::string str, std::string part) {
 Суть алгоритма: смещение искомой строки согласно таблице смещений.
 
 Сложность вычислений (худший случай): **O(nm)**, где n - длина строки, m - длина подстроки.
-Сложность вычислений (худший случай): **O(n/m)**, где n - длина строки, m - длина подстроки.
+Сложность вычислений (худший случай): **O(n/m)**
 
 Реализация на языке С++
 ```C++
@@ -174,3 +176,64 @@ bool BoyerMooreTextSearching(std::string str, std::string part) {
   }
 }
 ```
+
+## Алгоритм Рабина.
+
+Суть алгоритма: использование хеш-функций и посимвольная проверка в случае совпадения.
+
+Сложность вычислений (зависит от хеш-функции, худшая): **O(nm)**, где n - длина строки, m - длина подстроки.
+Сложность вычислений (лучшая): **O(n+m)**
+
+Реализация на языке С++
+
+```C++
+long int GetHash(std::string str, int start, int end) {
+
+  int hash = 0;
+
+  for (int i = start; i < end; i++) {
+
+    hash *= str[i];
+  }
+
+  return hash;
+}
+```
+
+```C++
+bool RabinTextSearching(std::string str, std::string part) {
+
+  int strLen = str.length();
+  int partLen = part.length();
+
+  long int partHash = GetHash(part, 0, partLen);
+
+  if (strLen < partLen) {
+
+    return false;
+  }
+
+  for (int i = 0; i <= strLen - partLen; i++) {
+
+    if (GetHash(str, i, i + partLen) == partHash) {
+
+      bool temp = true;
+      for (int j = i; j < i + partLen; j++) {
+
+        if (str[j] != part[j - i]) {
+
+          temp = false;
+        }
+      }
+
+      if (temp) {
+
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+```
+
