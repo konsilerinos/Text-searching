@@ -1,8 +1,48 @@
 # Пишем библиотеку для поиска информации в тексте на языке С++ 
 
 Поиск:
-1. Полный перебор.
+1. Последовательный.
 2. Алгоритм Кнута-Морриса-Пратта.
+
+## Последовательный поиск
+
+Суть: поэлементное сравнение строк.
+
+Сложность вычисление: **O(nm)**, где n - длина строки, m - длина подстроки.
+
+Реализация на языке С++
+```C++
+bool SequentialSearching(std::string str, std::string part) {
+
+  if (str.length() < part.length()) {
+
+    return false;
+  }
+  else {
+
+    for (int i = 0; i < str.length(); i++) {
+
+      bool temp = true;
+
+      for (int j = 0; j < part.length(); j++) {
+
+        if (str[j + i] != part[j]) {
+
+          temp = false;
+          j = part.length();
+        }
+      }
+
+      if (temp) {
+
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+```
 
 ## Алгоритм Кнута-Морриса-Пратта.
 
