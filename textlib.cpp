@@ -141,3 +141,49 @@ bool BoyerMooreTextSearching(std::string str, std::string part) {
 		return true;
 	}
 }
+
+long int GetHash(std::string str, int start, int end) {
+
+	int hash = 0;
+
+	for (int i = start; i < end; i++) {
+
+		hash *= str[i];
+	}
+
+	return hash;
+}
+bool RabinTextSearching(std::string str, std::string part) {
+
+	int strLen = str.length();
+	int partLen = part.length();
+
+	long int partHash = GetHash(part, 0, partLen);
+
+	if (strLen < partLen) {
+
+		return false;
+	}
+
+	for (int i = 0; i <= strLen - partLen; i++) {
+
+		if (GetHash(str, i, i + partLen) == partHash) {
+
+			bool temp = true;
+			for (int j = i; j < i + partLen; j++) {
+
+				if (str[j] != part[j - i]) {
+
+					temp = false;
+				}
+			}
+
+			if (temp) {
+
+				return true;
+			}
+		}
+	}
+
+	return false;
+}

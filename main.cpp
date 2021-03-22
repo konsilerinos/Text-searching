@@ -8,17 +8,17 @@ int main() {
 	std::string part = "kkk";
 
 	std::cout << "String: " << str << std::endl;
-	std::cout << "Part: " << part << std::endl;
+	std::cout << "Part: \"" << part << "\"" << std::endl;
 
-	bool searchingStatus = BoyerMooreTextSearching(str, part);
+	bool searchingStatus = RabinTextSearching(str, part);
 
 	if (searchingStatus) {
 
-		std::cout << "The part found in the string";
+		std::cout << "The part FOUND in the string";
 	}
 	else {
 
-		std::cout << "Part not found in the string";
+		std::cout << "Part NOT found in the string";
 	}
 	std::cout << std::endl;
 
