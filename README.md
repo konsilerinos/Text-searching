@@ -3,12 +3,13 @@
 Поиск:
 1. Последовательный.
 2. Алгоритм Кнута-Морриса-Пратта.
+3. Алгоритм Бойера-Мура-Хорспула.
 
 ## Последовательный поиск
 
 Суть: поэлементное сравнение строк.
 
-Сложность вычисление: **O(nm)**, где n - длина строки, m - длина подстроки.
+Сложность вычислений: **O(nm)**, где n - длина строки, m - длина подстроки.
 
 Реализация на языке С++
 ```C++
@@ -114,5 +115,62 @@ bool KnuthMorrisPrattTextSearching(std::string str, std::string part) {
   }
 }
 ```
+## Алгоритм Бойера-Мура-Хорспула
 
+Суть алгоритма: смещение искомой строки согласно таблице смещений.
 
+Сложность вычислений (худший случай): **O(nm)**, где n - длина строки, m - длина подстроки.
+Сложность вычислений (худший случай): **O(n/m)**, где n - длина строки, m - длина подстроки.
+
+Реализация на языке С++
+```C++
+bool BoyerMooreTextSearching(std::string str, std::string part) {
+
+  int strLen = str.length();
+  int partLen = part.length();
+
+  if (strLen < partLen) {
+
+    return false;
+  }
+
+  std::map <char, int> offsetTable;
+
+  for (int i = 0; i <= 255; i++) {
+
+    offsetTable.insert(std::make_pair(static_cast<char>(i), partLen));
+  }
+
+  for (int i = 0; i < partLen - 1; i++) {
+
+    offsetTable.insert(std::make_pair(part[i], partLen - i - 1));
+  }
+
+  int i = partLen - 1;
+  int j = i;
+  int k = i;
+
+  while (j >= 0 && i <= partLen - 1) {
+
+    j = partLen - 1;
+    k = i;
+
+    while (j >= 0 && str[k] == part[j]) {
+
+      k--;
+      j--;
+    }
+
+    i += offsetTable[i];
+  }
+
+  if (k >= strLen - partLen) {
+
+    return false;
+  }
+  else {
+
+    return true;
+  }
+}
+```
