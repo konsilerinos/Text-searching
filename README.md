@@ -237,3 +237,4 @@ bool RabinTextSearching(std::string str, std::string part) {
 }
 ```
 
+### ©️ Konsilerinos
